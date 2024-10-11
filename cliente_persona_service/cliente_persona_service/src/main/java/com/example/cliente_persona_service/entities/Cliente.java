@@ -13,7 +13,7 @@ public class Cliente extends Persona {
     @Column(unique = true, nullable = false)
     private String clienteId;
 
-    private String contraseña;
+    private String contrasena;
 
     private boolean estado;
 

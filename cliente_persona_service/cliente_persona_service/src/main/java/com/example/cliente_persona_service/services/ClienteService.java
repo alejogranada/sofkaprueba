@@ -31,7 +31,7 @@ public class ClienteService {
         cliente.setDireccion(clienteDetalles.getDireccion());
         cliente.setTelefono(clienteDetalles.getTelefono());
         cliente.setClienteId(clienteDetalles.getClienteId());
-        cliente.setContraseña(clienteDetalles.getContraseña());
+        cliente.setContrasena(clienteDetalles.getContrasena());
         cliente.setEstado(clienteDetalles.isEstado());
 
         return clienteRepository.save(cliente);

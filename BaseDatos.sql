@@ -12,7 +12,7 @@ CREATE TABLE persona (
 CREATE TABLE cliente (
     id BIGINT PRIMARY KEY,
     cliente_id VARCHAR(50) UNIQUE NOT NULL,
-    contraseña VARCHAR(255) NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
     estado BOOLEAN NOT NULL,
     FOREIGN KEY (id) REFERENCES persona(id)
 );
@@ -44,7 +44,7 @@ INSERT INTO persona (nombre, genero, edad, identificacion, direccion, telefono) 
 ('Juan Osorio', 'M', 35, '1122334455', '13 junio y Equinoccial', '098874587');
 
 -- Nota: Asegúrate de que los IDs coincidan con los registros insertados en 'persona'
-INSERT INTO cliente (id, cliente_id, contraseña, estado) VALUES
+INSERT INTO cliente (id, cliente_id, contrasena, estado) VALUES
 (1, 'joselema', '1234', true),
 (2, 'marianamontalvo', '5678', true),
 (3, 'juanosorio', '1245', true);

@@ -29,7 +29,7 @@ public class ClienteServiceTest {
         Cliente cliente = new Cliente();
         cliente.setNombre("Test Cliente");
         cliente.setClienteId("testcliente");
-        cliente.setContraseña("password");
+        cliente.setContrasena("password");
         cliente.setEstado(true);
 
         Mockito.when(clienteRepository.save(any(Cliente.class))).thenReturn(cliente);

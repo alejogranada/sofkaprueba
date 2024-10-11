@@ -9,6 +9,8 @@ services:
       - "3306:3306"
     networks:
       - microservices-network
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   cliente_persona_service:
     image: cliente_persona_service
