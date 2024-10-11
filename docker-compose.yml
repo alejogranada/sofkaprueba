@@ -36,7 +36,7 @@ services:
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_RABBITMQ_PORT: 5672
       SPRING_RABBITMQ_USERNAME: guest
-      SPRING_RABbitMQ_PASSWORD: guest
+      SPRING_RABBITMQ_PASSWORD: guest
     networks:
       - microservices-network
     depends_on:
@@ -54,7 +54,7 @@ services:
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_RABBITMQ_PORT: 5672
       SPRING_RABBITMQ_USERNAME: guest
-      SPRING_RABbitMQ_PASSWORD: guest
+      SPRING_RABBITMQ_PASSWORD: guest
     networks:
       - microservices-network
     depends_on:
