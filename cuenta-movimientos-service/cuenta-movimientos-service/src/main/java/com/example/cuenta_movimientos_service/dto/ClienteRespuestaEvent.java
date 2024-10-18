@@ -1,12 +1,13 @@
-package com.example.cliente_persona_service.dto;
+package com.example.cuenta_movimientos_service.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-/**
- * DTO para representar la información de un Cliente
- */
 @Data
-public class ClienteDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class ClienteRespuestaEvent {
 
     private Long clienteId;
     private String nombre;

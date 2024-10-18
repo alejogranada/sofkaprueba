@@ -8,5 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClienteSolicitudEvent {
+
     private Long clienteId;
+
 }

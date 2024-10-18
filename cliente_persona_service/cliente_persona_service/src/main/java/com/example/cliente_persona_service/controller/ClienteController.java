@@ -1,5 +1,6 @@
 package com.example.cliente_persona_service.controller;
 
+import com.example.cliente_persona_service.dto.ClienteDTO;
 import com.example.cliente_persona_service.entities.Cliente;
 import com.example.cliente_persona_service.producer.ClienteProducer;
 import com.example.cliente_persona_service.services.ClienteService;
@@ -32,8 +33,8 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> obtenerCliente(@PathVariable Long id) {
-        Cliente cliente = clienteService.obtenerClientePorId(id);
+    public ResponseEntity<ClienteDTO> obtenerCliente(@PathVariable Long id) {
+        ClienteDTO cliente = clienteService.obtenerClientePorId(id);
         return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
 

@@ -8,9 +8,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClienteRespuestaEvent {
+
     private Long clienteId;
     private String nombre;
+    private String nombreUsuario;
     private String identificacion;
     private String direccion;
     private String telefono;
+    private boolean estado;
+    private String genero;
+    private int edad;
+
 }

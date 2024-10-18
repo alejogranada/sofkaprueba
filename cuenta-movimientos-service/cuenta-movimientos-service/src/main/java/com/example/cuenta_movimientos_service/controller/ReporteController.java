@@ -1,6 +1,7 @@
 package com.example.cuenta_movimientos_service.controller;
 
 import com.example.cuenta_movimientos_service.dto.ReporteDTO;
+import com.example.cuenta_movimientos_service.services.ClienteSolicitudService;
 import com.example.cuenta_movimientos_service.services.ReporteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +20,9 @@ import java.util.List;
 public class ReporteController {
 
     @Autowired
+    private ClienteSolicitudService clienteSolicitudService;
+
+    @Autowired
     private ReporteService reporteService;
 
     @GetMapping
@@ -26,7 +30,15 @@ public class ReporteController {
             @RequestParam Long clienteId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaInicio,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaFin) {
-        List<ReporteDTO> reportes = reporteService.generarReporte(clienteId, fechaInicio, fechaFin);
+
+        // Enviar solicitud para obtener info del cliente
+        clienteSolicitudService.solicitarInfoCliente(clienteId);
+
+        // Esperar la respuesta del cliente en el servicio asíncrono
+        List<ReporteDTO> reportes = reporteService.generarReporteAsync(clienteId, fechaInicio, fechaFin);
+
+        // Retornar el reporte generado
         return new ResponseEntity<>(reportes, HttpStatus.OK);
     }
+
 }

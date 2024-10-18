@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -48,9 +49,9 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Cliente obtenerClientePorId(Long id) {
-        return clienteRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado con id " + id));
+    public ClienteDTO obtenerClientePorId(Long id) {
+        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
+        return clienteOpt.map(this::convertirAClienteDTO).orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado con id " + id));
     }
 
     @Async
@@ -72,6 +73,12 @@ public class ClienteService {
         dto.setNombre(cliente.getNombre());
         dto.setEstado(cliente.isEstado());
         dto.setNombreUsuario(cliente.getClienteId());
+        dto.setIdentificacion(cliente.getIdentificacion());
+        dto.setDireccion(cliente.getDireccion());
+        dto.setEdad(cliente.getEdad());
+        dto.setGenero(cliente.getGenero());
+        dto.setTelefono(cliente.getTelefono());
         return dto;
     }
+
 }
