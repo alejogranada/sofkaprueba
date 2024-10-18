@@ -5,10 +5,11 @@ import com.example.cliente_persona_service.entities.Cliente;
 import com.example.cliente_persona_service.exceptions.ResourceNotFoundException;
 import com.example.cliente_persona_service.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ClienteService {
@@ -47,16 +48,17 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    /*
     public Cliente obtenerClientePorId(Long id) {
         return clienteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado con id " + id));
     }
-    */
 
-    public ClienteDTO obtenerClientePorId(Long id) {
-        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
-        return clienteOpt.map(this::convertirAClienteDTO).orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado con id " + id));
+    @Async
+    public CompletableFuture<Cliente> obtenerClientePorIdAsync(Long id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado con id (Async) " + id));
+        // Devolvemos un CompletableFuture completado
+        return CompletableFuture.completedFuture(cliente);
     }
 
     public Cliente obtenerClientePorClienteId(String clienteId) {

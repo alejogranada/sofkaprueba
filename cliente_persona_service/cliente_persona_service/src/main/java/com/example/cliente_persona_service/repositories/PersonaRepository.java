@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Long> {
+    //TODO: Implementar si se necesita por Identificacion en la tabla Persona
     Optional<Persona> findByIdentificacion(String identificacion);
 }

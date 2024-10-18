@@ -1,7 +1,7 @@
 package com.example.cliente_persona_service.controller;
 
-import com.example.cliente_persona_service.dto.ClienteDTO;
 import com.example.cliente_persona_service.entities.Cliente;
+import com.example.cliente_persona_service.producer.ClienteProducer;
 import com.example.cliente_persona_service.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/clientes")
@@ -31,9 +32,15 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteDTO> obtenerCliente(@PathVariable Long id) {
-        ClienteDTO cliente = clienteService.obtenerClientePorId(id);
+    public ResponseEntity<Cliente> obtenerCliente(@PathVariable Long id) {
+        Cliente cliente = clienteService.obtenerClientePorId(id);
         return new ResponseEntity<>(cliente, HttpStatus.OK);
+    }
+
+    @GetMapping("/async/{id}")
+    public CompletableFuture<ResponseEntity<Cliente>> obtenerClienteAsync(@PathVariable Long id) {
+        return clienteService.obtenerClientePorIdAsync(id)
+                .thenApply(cliente -> new ResponseEntity<>(cliente, HttpStatus.OK));
     }
 
     @PutMapping("/{id}")
@@ -47,4 +54,21 @@ public class ClienteController {
         clienteService.eliminarCliente(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    // Prueba de mensajes con Rabbit
+    /* Inicio */
+    private final ClienteProducer clienteProducer;
+
+    @Autowired
+    public ClienteController(ClienteProducer clienteProducer) {
+        this.clienteProducer = clienteProducer;
+    }
+
+    @PostMapping("/solicitar-cliente")
+    public ResponseEntity<String> solicitarCliente(@RequestParam Long clienteId) {
+        clienteProducer.solicitarCliente(clienteId);
+        return ResponseEntity.ok("Solicitud enviada para el cliente ID: " + clienteId);
+    }
+    /* Fin */
+
 }
